@@ -35,7 +35,7 @@ const AudioPlayer = () => {
     <div>
       {/* Optional: Display playback controls */}
       <button onClick={() => setIsPlaying(!isPlaying)}>
-        {isPlaying ? 'Pause' : 'Play'}
+        
       </button>
     </div>
   );
