@@ -22,7 +22,7 @@ const App = ({user, setUser}: Props) => {
     <>
           <Game user={user}/>
           <Payment user={user} setUser={setUser}/>
-          <Progression user={user}/>
+          {/* <Progression user={user}/> */}
           {/* <TextToSpeech/> */}
           <BackgroundSound/>
         </>

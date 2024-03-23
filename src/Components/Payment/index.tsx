@@ -26,6 +26,8 @@ import { useState } from 'react'
 import { Input } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 import Routes from '../../Routes';
+import Quest from '../LevelUpProgression/Quest';
+import Progression from '../LevelUpProgression';
 
 type Props = {
   user: User
@@ -52,10 +54,10 @@ function Payment({ user, setUser }: Props) {
     day: '2-digit'
   });
 
-  const makePayment = async() => {
+  const makePayment = async () => {
     let paymentAmount = 0
     console.log(selectVal)
-    switch(selectVal) {
+    switch (selectVal) {
       case 'current':
         paymentAmount = user.cards[0].currentBalance
         break
@@ -74,7 +76,8 @@ function Payment({ user, setUser }: Props) {
       },
       body: JSON.stringify({
         amount: paymentAmount,
-      })});
+      })
+    });
     const data: User = await res.json();
     data.token = user.token;
     console.log(data)
@@ -93,37 +96,45 @@ function Payment({ user, setUser }: Props) {
   user.cards[0].transactions.sort((a: Transaction, b: Transaction) => (new Date(a.date) > new Date(b.date)) ? -1 : 1)
   return (
     <Flex justifyContent="center" flexDirection="column" marginBottom="30px">
-      <Flex justifyContent="center" marginTop="30px">
-        <Button onClick={() => setOpen(true)} colorScheme='red' width="10vw">Pay</Button>
-        <Modal isOpen={open} onClose={() => setOpen(false)}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Make a payment towards your credit</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              Pay From
-              <Select marginTop="5px">
-                <option value='option1'>Bank Account 1 - 5984</option>
-                <option value='option2'>Bank Account 2 - 1438</option>
-                <option value='option3'>Bank Account 3 - 3994</option>
-              </Select>
-              Amount
-              <Select value={selectVal} onChange={selectOnChange} marginTop="5px">
-                <option value='current'>Current balance - ${user.cards[0].currentBalance.toFixed(2)}</option>
-                <option value='min' disabled={user.cards[0].minPayment > user.cards[0].currentBalance}>Total minimum payment due - ${user.cards[0].minPayment.toFixed(2)}</option>
-                <option value='fixed'>Fixed Amount</option>
-              </Select>
-              {selectVal === 'fixed' ? <Input placeholder='Enter amount' value={inputVal} onChange={(e: any) => setInputVal(e.target.value)} marginTop="5px" /> : <></>}
-            </ModalBody>
+      <Flex justifyContent="center" marginTop="30px" >
+        <Flex marginLeft="15px" marginRight="15px">
+          <Quest user={user} />
+        </Flex>
+        <Flex marginLeft="15px" marginRight="15px">
+          <Button size='lg' onClick={() => setOpen(true)} colorScheme='red' width="10vw">Pay</Button>
+          <Modal isOpen={open} onClose={() => setOpen(false)}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Make a payment towards your credit</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                Pay From
+                <Select marginTop="5px">
+                  <option value='option1'>Bank Account 1 - 5984</option>
+                  <option value='option2'>Bank Account 2 - 1438</option>
+                  <option value='option3'>Bank Account 3 - 3994</option>
+                </Select>
+                Amount
+                <Select value={selectVal} onChange={selectOnChange} marginTop="5px">
+                  <option value='current'>Current balance - ${user.cards[0].currentBalance.toFixed(2)}</option>
+                  <option value='min' disabled={user.cards[0].minPayment > user.cards[0].currentBalance}>Total minimum payment due - ${user.cards[0].minPayment.toFixed(2)}</option>
+                  <option value='fixed'>Fixed Amount</option>
+                </Select>
+                {selectVal === 'fixed' ? <Input placeholder='Enter amount' value={inputVal} onChange={(e: any) => setInputVal(e.target.value)} marginTop="5px" /> : <></>}
+              </ModalBody>
 
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={() => makePayment()} isDisabled={parseFloat(inputVal) > user.cards[0].currentBalance}>
-                Pay
-              </Button>
-              <Button variant='ghost'>Get Help!</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+              <ModalFooter>
+                <Button colorScheme='blue' mr={3} onClick={() => makePayment()} isDisabled={parseFloat(inputVal) > user.cards[0].currentBalance}>
+                  Pay
+                </Button>
+                <Button variant='ghost'>Get Help!</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Flex>
+        <Flex marginLeft="15px" marginRight="15px">
+          <Progression user={user} />
+        </Flex>
       </Flex>
       <Flex justifyContent="center" marginTop="10px">
         <TableContainer>

@@ -35,8 +35,8 @@ function Quest({user}: Props) {
   return (
     <>
     {/* @ts-ignore*/}
-      <Button ref={btnRef} colorScheme='teal' onClick={() => setOpen(true)}>
-        Ongoing Quests:
+      <Button ref={btnRef} colorScheme='teal' width="10vw" size='lg' onClick={() => setOpen(true)}>
+        Quests
       </Button>
       {/* @ts-ignore*/}
       <Drawer
