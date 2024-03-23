@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './Components/App';
 import reportWebVitals from './reportWebVitals';
 import { RequiredAuthProvider } from "@propelauth/react";
-
-
-import { ChakraProvider } from '@chakra-ui/react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './Components/Navbar';
+import AuthWrapper from './Components/AuthWrapper';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,14 +10,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <RequiredAuthProvider authUrl="https://372270922.propelauthtest.com/">
-    <ChakraProvider>
-      <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<App />} />
-      </Routes>
-      </BrowserRouter>
-    </ChakraProvider>
+      <AuthWrapper />
     </RequiredAuthProvider>
   </React.StrictMode>
 );

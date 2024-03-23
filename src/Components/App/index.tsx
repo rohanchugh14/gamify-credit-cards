@@ -10,43 +10,23 @@ import Progression from "../LevelUpProgression";
 import TextToSpeech from "../TextToSpeech";
 import BackgroundSound from "../BackgroundSound";
 
-const App = withAuthInfo((props: WithAuthInfoProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    const fetchFunc = async () => {
-      let data = await fetch(`${Routes.API}/profile`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${props.accessToken}`,
-        },
-      });
-      const userData: User = await data.json();
-      userData.token = props.accessToken ?? "";
-      setUser(userData);
-    };
-    fetchFunc();
-  }, []);
+type Props = {
+  user: User;
+  setUser: (user: User) => void;
+}
+const App = ({user, setUser}: Props) => {
 
-  console.log(props);
+
+
   return (
     <>
-      {user ? (
-        <>
           <Game user={user}/>
           <Payment user={user} setUser={setUser}/>
           <Progression user={user}/>
           {/* <TextToSpeech/> */}
           <BackgroundSound/>
         </>
-      ) : (
-        <Flex justifyContent="center" alignItems="center">
-          <Box>
-            <Spinner size="xl" />
-          </Box>
-        </Flex>
-      )}
-    </>
-  );
-});
+      )
+};
 
 export default App;

@@ -11,13 +11,29 @@ import {
   useColorModeValue,
   useDisclosure,
   Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  Input,
 } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { useLogoutFunction, useRedirectFunctions } from '@propelauth/react'
 import "./Navbar.css";
+import { User } from "../types";
+import { useState } from "react";
+import Routes from "../../Routes";
 
-export default function Navbar() {
+type Props = {
+  user: User;
+  setUser: (user: User) => void;
+}
+export default function Navbar({user, setUser}: Props) {
   const { isOpen, onToggle } = useDisclosure();
   return (
     <Box>
@@ -57,7 +73,7 @@ export default function Navbar() {
           </Link>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav />
+            <DesktopNav user={user} setUser={setUser}/>
           </Flex>
         </Flex>
       </Flex>
@@ -69,14 +85,52 @@ export default function Navbar() {
   );
 }
 
-const DesktopNav = () => {
+const DesktopNav = ({user, setUser}: Props) => {
   const linkColor = useColorModeValue("black", "black");
   const linkHoverColor = useColorModeValue("#d02c22", "#d02c22");
   const location = useLocation();
   const { redirectToAccountPage } = useRedirectFunctions()
   const logoutFunction = useLogoutFunction()
+  const [isOpen, setIsOpen] = useState(false)
+  const [amount, setAmount] = useState('')
+  const buyItem = async () => {
+    const cost = parseFloat(amount)
+    if (cost + user.cards[0].currentBalance > user.cards[0].creditLimit) {
+      alert("Not enough money!")
+      return
+    }
+    const res = await fetch(`${Routes.API}/buy/${user.cards[0]._id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: cost,
+      })});
+      const data: User = await res.json();
+      data.token = user.token;
+      setUser(data)
+      setIsOpen(false)
+  }
+  return ( <>
+    <Modal isOpen={isOpen} onClose={() => {setIsOpen(false)}}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Use Credit Card</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Input value={amount} onChange={(e: any) => setAmount(e.target.value)}placeholder="Amount to buy" />
+          </ModalBody>
 
-  return (
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={buyItem}>
+              Buy!!!
+            </Button>
+            <Button variant='ghost' onClick={() => setIsOpen(false)}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     <Stack
       direction={"row"}
       justifyContent={"flex-end"}
@@ -91,7 +145,7 @@ const DesktopNav = () => {
                 as="a"
                 padding={"10px 10px"}
                 href={navItem.href ?? undefined}
-                onClick={navItem.label === "LOGOUT" ? () => logoutFunction(true) : navItem.label === "ACCOUNT" ? () => redirectToAccountPage() : () => {}}
+                onClick={navItem.label === "LOGOUT" ? () => logoutFunction(true) : navItem.label === "ACCOUNT" ? () => redirectToAccountPage() : () => setIsOpen(true)}
                 fontSize={"18px"}
                 fontWeight={500}
                 color={linkColor}
@@ -115,7 +169,7 @@ const DesktopNav = () => {
         </Box>
       ))}
     </Stack>
-  );
+    </>);
 };
 
 const MobileNav = () => {
@@ -194,7 +248,7 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "MAKE PAYMENT"
+    label: "USE CREDIT CARD"
   },
   {
     label: "ACCOUNT",

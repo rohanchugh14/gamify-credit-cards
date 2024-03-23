@@ -82,12 +82,14 @@ const companiesWithCategories = [
 
 async function generateNewCardWithTransactions(userId) {
   const annualFees = [0, 50, 95, 250]
+  const limit = generateRandomNumber(20, 30) * 100;
+  const balance = generateRandomNumber(0, 0.95 * limit);
   const card = {
       userId: userId,
       name: `${faker.commerce.productName()} Card`,
-      creditLimit: parseFloat(String(generateRandomNumber(5000, 10000)) + "." + String(generateRandomNumber(0, 99))),
+      creditLimit: limit,
       annualFee: annualFees[generateRandomNumber(0, annualFees.length - 1)],
-      currentBalance: parseFloat(String(generateRandomNumber(0, 5000)) + "." + String(generateRandomNumber(0, 99))),
+      currentBalance: parseFloat(balance.toFixed(2)),
       statementBalance: generateRandomNumber(0, 5000),
       minPayment: generateRandomNumber(25, 100),
   };
@@ -108,7 +110,7 @@ async function generateTransactions(userId, cardId) {
           category: company.category,
           date: faker.date.recent(),
           description: company.description,
-          amount: parseFloat(generateRandomNumber(1, 1000) + '.' + generateRandomNumber(0, 99)),
+          amount: parseFloat(generateRandomNumber(1, 250) + '.' + generateRandomNumber(0, 99)),
       };
       transactions.push(transaction);
   }
@@ -228,6 +230,43 @@ async function main() {
       } catch (err) {
         console.error(err);
         res.status(500).send('Failed to make payment.');
+      }
+    });
+
+    // make a transaction on a card
+    app.post('/buy/:cardId', requireUser, async (req, res) => {
+      try {
+        const cardId = new ObjectId(req.params.cardId);
+        const transactionAmount = parseFloat(req.body.amount);
+        const card = await cardsCollection.findOne({ _id: cardId });
+        if (!card) {
+          res.status(404).send('Card not found.');
+          return;
+        }
+        const newBalance = card.currentBalance + transactionAmount;
+        await cardsCollection.updateOne({ _id: cardId }, { $set: { currentBalance: newBalance } });
+        // generate a new transaction for the card
+        const company = companiesWithCategories[generateRandomNumber(0, companiesWithCategories.length - 1)];
+        const newTransaction = {
+          userId: req.user.userId,
+          cardId: cardId,
+          category: company.category,
+          date: faker.date.recent(),
+          description: company.description,
+          amount: transactionAmount,
+        };
+        await transactionsCollection.insertOne(newTransaction);
+        // return the updated user data and card data
+        const updatedUser = await usersCollection.findOne({ _id: req.user.userId });
+        const cards = await cardsCollection.find({ userId: req.user.userId }).toArray();
+        for (const card of cards) {
+          card.transactions = await transactionsCollection.find({ cardId: card._id }).toArray();
+        }
+        updatedUser.cards = cards;
+        res.json(updatedUser);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Failed to make transaction.');
       }
     });
   } catch (e) {
