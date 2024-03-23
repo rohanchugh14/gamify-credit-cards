@@ -3,7 +3,11 @@ import {
   Tbody,
   Tr,
   Td,
+  Th,
   TableContainer,
+  TableCaption,
+  Tfoot,
+  Thead,
   Flex,
   Box,
   Button
@@ -17,8 +21,8 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
-import { User } from '../types';
-import {useState} from 'react'
+import { Transaction, User } from '../types';
+import { useState } from 'react'
 import { Input } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 
@@ -26,7 +30,7 @@ type Props = {
   user: User
 }
 
-function Payment({user}: Props) {
+function Payment({ user }: Props) {
   const [open, setOpen] = useState(false)
   const data =
   {
@@ -43,7 +47,7 @@ function Payment({user}: Props) {
     month: 'short',
     day: '2-digit'
   });
-
+  user.cards[0].transactions.sort((a: Transaction, b: Transaction) => (new Date(a.date) > new Date(b.date)) ? -1 : 1)
   return (
     <Flex justifyContent="center" flexDirection="column">
       <Flex justifyContent="center" marginTop="30px">
@@ -102,6 +106,42 @@ function Payment({user}: Props) {
             </Tbody>
           </Table>
         </TableContainer>
+      </Flex>
+      <Flex justifyContent="center" marginTop='10px'>
+        <TableContainer>
+          <Table variant='striped' colorScheme='teal'>
+            <TableCaption>Imperial to metric conversion factors</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>Date</Th>
+                <Th>Description</Th>
+                <Th>Category</Th>
+                <Th>Name</Th>
+                <Th>Amount</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {user.cards[0].transactions.map((transaction) => <Tr>
+                <Td>{new Date(transaction.date).toLocaleDateString(undefined, {
+                  month: 'short',
+                  day: '2-digit'
+                })}</Td>
+                <Td>{transaction.description}</Td>
+                <Td>{transaction.category}</Td>
+                <Td>{user.cards[0].name}</Td>
+                <Td>{transaction.amount}</Td>
+              </Tr>)}
+            </Tbody>
+            <Tfoot>
+              <Tr>
+                <Th>To convert</Th>
+                <Th>into</Th>
+                <Th isNumeric>multiply by</Th>
+              </Tr>
+            </Tfoot>
+          </Table>
+        </TableContainer>
+
       </Flex>
     </Flex>
 

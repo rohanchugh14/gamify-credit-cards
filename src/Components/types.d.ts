@@ -1,7 +1,7 @@
 export type Transaction = {
   _id: string;
   amount: number;
-  date: number;
+  date: string;
   description: string;
   category: string;
   userId: string;
@@ -15,6 +15,7 @@ export type CreditCard = {
   annualFee: number;
   currentBalance: number;
   transactions: Transaction[];
+  name: string;
 }
 export type User = {
   _id: string;
