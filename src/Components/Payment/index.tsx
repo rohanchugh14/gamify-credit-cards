@@ -183,7 +183,7 @@ function Payment({ user, setUser }: Props) {
                   <Td>{transaction.description}</Td>
                   <Td>{transaction.category}</Td>
                   <Td>{user.cards[0].name}</Td>
-                  <Td isNumeric>${transaction.amount.toFixed(2)}</Td>
+                  <Td>${transaction.amount.toFixed(2)}</Td>
                 </Tr>)}
               </Tbody>
             </Table>
