@@ -1,3 +1,4 @@
+import Navbar from './Components/Navbar';
 import EXPBar from './EXPBar';
 import Payment from './Payment';
 import CreditBar from './CreditBar';
