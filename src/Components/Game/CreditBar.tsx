@@ -7,7 +7,7 @@ function CreditBar() {
   return (
     <div className="App">
       <Box width="30vw">
-        <div>Credit Score: {creditScore}</div>
+        <Box color="white">Credit Score: {creditScore}</Box>
         <Progress hasStripe colorScheme='red' value={creditScore/CREDIT_MAX*100} />
       </Box>
     </div>

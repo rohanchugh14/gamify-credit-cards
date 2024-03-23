@@ -36,8 +36,8 @@ function EXPBar() {
   return (
     <div className="App">
       <Box width="30vw">
-        <Button colorScheme='blue' onClick={onClickFunc}>Button</Button>
-        <div>Level: {level}</div>
+        {/* <Button colorScheme='blue' onClick={onClickFunc}>Button</Button> */}
+        <Box color="white">Level: {level}</Box>
         <Progress hasStripe colorScheme='green' value={XP/2**level*100} />
       </Box>
     </div>

@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import {useState} from 'react'
 
 
@@ -7,7 +7,7 @@ function Gold() {
   return (
     <Flex justifyContent="flex-end">
       <div className="App">
-        <div>Gold: {gold}</div>
+        <Box color="white">Gold: {gold}</Box>
       </div>
     </Flex>
   );
