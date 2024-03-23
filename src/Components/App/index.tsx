@@ -7,6 +7,7 @@ import Routes from "../../Routes";
 import { User } from "../types";
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import Progression from "../LevelUpProgression";
+import TextToSpeech from "../TextToSpeech";
 
 const App = withAuthInfo((props: WithAuthInfoProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -33,6 +34,7 @@ const App = withAuthInfo((props: WithAuthInfoProps) => {
           <Game user={user}/>
           <Payment user={user} setUser={setUser}/>
           <Progression user={user}/>
+          <TextToSpeech/>
         </>
       ) : (
         <Flex justifyContent="center" alignItems="center">

@@ -139,8 +139,6 @@ function Payment({ user, setUser }: Props) {
                 <Td>Payment Due Date</Td>
                 <Td>{String(DueDate)}</Td>
               </Tr>
-            {/* </Tbody>
-            <Tbody> */}
               <Tr>
                 <Td>Minimum Payment Due</Td>
                 <Td isNumeric>${user.cards[0].minPayment.toFixed(2)}</Td>
