@@ -1,12 +1,16 @@
 import EXPBar from './EXPBar';
 import Payment from './Payment';
+import CreditBar from './CreditBar';
+import Gold from './Gold';
 
 
 function App() {
   return (
     <div className="App">
-      <Payment />
       <EXPBar />
+      <CreditBar />
+      <Gold />
+      <Payment />
     </div>
   );
 }
