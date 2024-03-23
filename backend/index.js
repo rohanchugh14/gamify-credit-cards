@@ -251,7 +251,7 @@ async function main() {
           userId: req.user.userId,
           cardId: cardId,
           category: company.category,
-          date: faker.date.recent(),
+          date: String(new Date()),
           description: company.description,
           amount: transactionAmount,
         };

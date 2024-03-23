@@ -36,7 +36,10 @@ type Props = {
 export default function Navbar({user, setUser}: Props) {
   const { isOpen, onToggle } = useDisclosure();
   return (
-    <Box>
+    <Box
+    pos="sticky" // Make the navbar sticky
+        top="0" // Stick to the top of the viewport
+        zIndex="100" >
       <Flex
         bg={useColorModeValue("white", "white")}
         color={useColorModeValue("white", "white")}
@@ -47,6 +50,7 @@ export default function Navbar({user, setUser}: Props) {
         borderStyle={"solid"}
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
+        
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
