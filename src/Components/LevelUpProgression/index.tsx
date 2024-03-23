@@ -2,19 +2,20 @@ import React from "react";
 import { User } from "../types";
 import { useState } from 'react'
 import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
 } from '@chakra-ui/react'
 import Quest from "./Quest";
+import TextToSpeech from "../TextToSpeech";
 
 const knowledgeBook: Record<number, string> = {
-    1: `
+  1: `
     Brave Undead,
     
     Embark on a perilous journey to fortify your financial standing, wielding your credit card as a weapon against the looming darkness. But heed this warning: as you amass credit, be vigilant! Just as a dreaded skeleton lurks in the shadows, failure to honor your debts may unleash havoc upon the peaceful town.
@@ -26,35 +27,35 @@ const knowledgeBook: Record<number, string> = {
     Signed,
     The Keeper of Financial Wisdom`,
 
-    2: `Brave Warrior,
+  2: `Brave Warrior,
 
     A second decree now commands your attention: pay fines swiftly. In doing so, you shall gain crucial experience, unlocking a wealth of wisdom and prosperity. Expect rewards in coins, a soaring credit score, and access to superior credit cards. Forge ahead with courage, for your financial journey holds boundless opportunities.
     
     Signed,
     The Keeper of Prosperity`,
 
-    3: `Noble Adventurer,
+  3: `Noble Adventurer,
 
     Prepare thyself for the next mandate: prepay ere the statement's dawn. By reducing thy utilization ere it is tallied, thou shalt wield financial prowess unmatched. Embrace this tactic, for it shall bolster thy credit score and grant thee favor with lenders. As thou treadest this path, remember: foresight be thy greatest ally in the battle for fiscal dominion.
     
     Signed,
     The Custodian of Fiscal Fortitude`,
 
-    4: `Mighty Conqueror,
+  4: `Mighty Conqueror,
 
     On the eve of statement's arrival, heed this dire warning: The contract demands settlement at earliest convenience, lest dire consequences befall thee. Fail not in thy duty, for neglect shall usher a plummet in credit. Let swiftness be thy ally, and debts be met without delay. Thus, safeguard thy financial stronghold from the shadows that lurk.
     
     Signed,
     The Sentinel of Credit Vigilance`,
 
-    5: `Majestic Conqueror,
+  5: `Majestic Conqueror,
 
     Behold the treasure trove that awaits thee through mastery of thy credit score! As thou diligently tendest to its growth, envision the bountiful rewards that shall grace thy path. A high credit score unlocks gates to untold riches: favorable loan terms, coveted credit cards, and entry to realms of opulence. With each prudent step, thou art closer to securing financial sovereignty and reaping the fruits of thy labor.
     
     Signed,
     The Herald of Financial Ascendancy`,
 
-    6: `Illustrious Conqueror,
+  6: `Illustrious Conqueror,
 
     Behold the ladder of credit cards, each rung ascending to greater realms of prosperity. Begin thy ascent with the humble starter card, offering a foothold to novices in the realm of credit. As thou prove thy mettle, advance to rewards cards, where loyalty is met with riches in the form of cashback and points.
     
@@ -65,7 +66,7 @@ const knowledgeBook: Record<number, string> = {
     Signed,
     The Sage of Credit Mastery`,
 
-    7: `Mighty Conqueror of the Fiscal Realm,
+  7: `Mighty Conqueror of the Fiscal Realm,
 
     Having traversed the arduous path of credit mastery, thou hast emerged victorious, adorned with the knowledge and confidence to conquer the vast expanse of the fiscal world that lies before thee. With thy newfound wisdom as thy blade and thy indomitable spirit as thy shield, go forth and claim thy rightful place among the financial elite.
     
@@ -78,34 +79,46 @@ const knowledgeBook: Record<number, string> = {
 
 }
 type Props = {
-    user: User;
+  user: User;
 };
-function Progression({user}: Props) {
-    const [open, setOpen] = useState(false)
-    return (
-      <>
-        <Button onClick={() => setOpen(true)}>Invoke Next Nugget of Knowledge</Button>
-  
-        <Modal isOpen={open} onClose={() => setOpen(false)}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Level {user.level}: </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {knowledgeBook[user.level]}
-            </ModalBody>
-  
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={() => setOpen(false)}>
-                Close
-              </Button>
-              <Button variant='ghost'>Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-        <Quest user={user}/>
-      </>
-    )
+function Progression({ user }: Props) {
+  const [nuggetIter, setNuggetIter] = useState(1)
+  const [open, setOpen] = useState(false)
+  const onClickPrevHandler = (e: any) => {
+    if (nuggetIter > 1) {
+      setNuggetIter(nuggetIter -1)
+    }
+  }
+  const onClickNextHandler = (e: any) => {
+    if (nuggetIter < 7) {
+      console.log(nuggetIter)
+      setNuggetIter(nuggetIter +1)
+    }
+  }
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Invoke Next Nugget of Knowledge</Button>
+
+      <Modal isOpen={open} onClose={() => setOpen(false)}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Level {user.level}: </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {knowledgeBook[nuggetIter]}
+          </ModalBody>
+
+          <ModalFooter flexDirection="column" alignContent="center" justifyContent="center">
+            <TextToSpeech runOnClickPrev={onClickPrevHandler} runOnClickNext={onClickNextHandler} />
+            <Button colorScheme='teal' size='lg' onClick={() => setOpen(false)}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <Quest user={user} />
+    </>
+  )
 }
 
 export default Progression;

@@ -34,7 +34,7 @@ const App = withAuthInfo((props: WithAuthInfoProps) => {
           <Game user={user}/>
           <Payment user={user} setUser={setUser}/>
           <Progression user={user}/>
-          <TextToSpeech/>
+          {/* <TextToSpeech/> */}
         </>
       ) : (
         <Flex justifyContent="center" alignItems="center">

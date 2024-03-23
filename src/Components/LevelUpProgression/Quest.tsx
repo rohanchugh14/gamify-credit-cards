@@ -23,6 +23,7 @@ const questBook: Record<number, string> = {
   6: `Apply for another credit card.`,
   7: `Reach 800 credit score.`
 }
+
 type Props = {
   user: User;
 };
