@@ -48,11 +48,10 @@ function Quest({user}: Props) {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Ongoing Quests:</DrawerHeader>
+          <DrawerHeader>Quests:</DrawerHeader>
 
           <DrawerBody>
             <Flex flexDirection="column" >
-              Quest {questIter}
               {questBook[questIter]}
               <Button colorScheme='teal' onClick={() => setQuestIter(questIter + 1)} marginTop = "30px">
                 Next Quest
@@ -64,7 +63,6 @@ function Quest({user}: Props) {
             <Button variant='outline' mr={3} onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button colorScheme='blue'>Save</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
