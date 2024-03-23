@@ -49,7 +49,7 @@ function Payment({ user }: Props) {
   });
   user.cards[0].transactions.sort((a: Transaction, b: Transaction) => (new Date(a.date) > new Date(b.date)) ? -1 : 1)
   return (
-    <Flex justifyContent="center" flexDirection="column">
+    <Flex justifyContent="center" flexDirection="column" marginBottom="30px">
       <Flex justifyContent="center" marginTop="30px">
         <Button onClick={() => setOpen(true)} colorScheme='red' width="10vw">Pay</Button>
         <Modal isOpen={open} onClose={() => setOpen(false)}>
@@ -85,21 +85,17 @@ function Payment({ user }: Props) {
         <TableContainer>
           <Table variant='simple'>
             <Tbody>
-              <Tr>
+              <Tr justifyContent="space-between">
                 <Td>Current Balance</Td>
-                <Td>${data.balance.toFixed(2)}</Td>
-              </Tr>
-            </Tbody>
-            <Tbody>
-              <Tr>
+                <Td isNumeric>${data.balance.toFixed(2)}</Td>
                 <Td>Payment Due Date</Td>
                 <Td>{String(DueDate)}</Td>
               </Tr>
+            {/* </Tbody>
+            <Tbody> */}
               <Tr>
                 <Td>Minimum Payment Due</Td>
-                <Td>${data.min_payment.toFixed(2)}</Td>
-              </Tr>
-              <Tr>
+                <Td isNumeric>${data.min_payment.toFixed(2)}</Td>
                 <Td>Closing Date Due</Td>
                 <Td>{ClosingDate}</Td>
               </Tr>
@@ -110,7 +106,6 @@ function Payment({ user }: Props) {
       <Flex justifyContent="center" marginTop='10px'>
         <TableContainer>
           <Table variant='striped' colorScheme='teal'>
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
               <Tr>
                 <Th>Date</Th>
@@ -129,16 +124,9 @@ function Payment({ user }: Props) {
                 <Td>{transaction.description}</Td>
                 <Td>{transaction.category}</Td>
                 <Td>{user.cards[0].name}</Td>
-                <Td>{transaction.amount}</Td>
+                <Td isNumeric>${transaction.amount.toFixed(2)}</Td>
               </Tr>)}
             </Tbody>
-            <Tfoot>
-              <Tr>
-                <Th>To convert</Th>
-                <Th>into</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Tfoot>
           </Table>
         </TableContainer>
 
