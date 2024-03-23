@@ -8,6 +8,7 @@ import { User } from "../types";
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import Progression from "../LevelUpProgression";
 import TextToSpeech from "../TextToSpeech";
+import BackgroundSound from "../BackgroundSound";
 
 const App = withAuthInfo((props: WithAuthInfoProps) => {
   const [user, setUser] = useState<User | null>(null);
@@ -35,6 +36,7 @@ const App = withAuthInfo((props: WithAuthInfoProps) => {
           <Payment user={user} setUser={setUser}/>
           <Progression user={user}/>
           {/* <TextToSpeech/> */}
+          <BackgroundSound/>
         </>
       ) : (
         <Flex justifyContent="center" alignItems="center">
