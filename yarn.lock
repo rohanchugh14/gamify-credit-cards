@@ -2602,6 +2602,20 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@propelauth/javascript@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@propelauth/javascript/-/javascript-2.0.14.tgz#f32eba7ec52e99eb05422c0798476806d4345fc1"
+  integrity sha512-sqvJCc5TV/C8+YTlE4FAhESdPkXeFVx+HAsJ9qLTvy7vdchiciYKiTf+r95qnr3Ut2i/HxENj+C6IUi42GQ7nA==
+
+"@propelauth/react@^2.0.18":
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/@propelauth/react/-/react-2.0.18.tgz#f2f6da9c568da773340abc0ddf58fd4d67f188ab"
+  integrity sha512-RdzUw8ahiyD8m8OryDhJg5yxve/s878HVYhNw5ykI1TU8e/u0dUqfPFP0jJnZ6ex5JtSyCQZ6slsk1nIr6+5DQ==
+  dependencies:
+    "@propelauth/javascript" "^2.0.14"
+    hoist-non-react-statics "^3.3.2"
+    utility-types "^3.10.0"
+
 "@remix-run/router@1.15.3":
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.15.3.tgz#d2509048d69dbb72d5389a14945339f1430b2d3c"
@@ -6141,7 +6155,7 @@ he@^1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-hoist-non-react-statics@^3.3.1:
+hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -10496,6 +10510,11 @@ utila@~0.4:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/utila/-/utila-0.4.0.tgz#8a16a05d445657a3aea5eecc5b12a4fa5379772c"
   integrity sha512-Z0DbgELS9/L/75wZbro8xAnT50pBVFQZ+hUEueGDU5FN51YSCYM+jdxsfCiHjwNP/4LCDD0i/graKpeBnOXKRA==
+
+utility-types@^3.10.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-3.11.0.tgz#607c40edb4f258915e901ea7995607fdf319424c"
+  integrity sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==
 
 utils-merge@1.0.1:
   version "1.0.1"

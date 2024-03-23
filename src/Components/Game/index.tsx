@@ -7,8 +7,12 @@ import { Flex } from '@chakra-ui/react';
 import Protagonist from "./Protagonist";
 import Enemy from "./Enemy";
 import {useState} from 'react'
+import { User } from "../types";
 
-const Game = () => {
+type Props = {
+  user: User;
+};
+const Game = ({user}: Props) => {
   const [creditLimit, setCreditLimit] = useState<number>(2200)
   const [creditUsed, setCreditUsed] = useState<number>(1230.32)
   const EnemyStyle = { 

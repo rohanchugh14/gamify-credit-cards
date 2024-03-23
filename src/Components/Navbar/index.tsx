@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Link, useLocation } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { useLogoutFunction, useRedirectFunctions } from '@propelauth/react'
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -21,8 +22,8 @@ export default function Navbar() {
   return (
     <Box>
       <Flex
-        bg={useColorModeValue("#C8E5BB", "#C8E5BB")}
-        color={useColorModeValue("gray.600", "white")}
+        bg={useColorModeValue("white", "white")}
+        color={useColorModeValue("white", "white")}
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
@@ -48,7 +49,7 @@ export default function Navbar() {
         <Flex flex={{ base: 1 }} justify={"space-between"}>
           <Link to="/">
             <Image
-              src="/logo.png"
+              src="/Assets/capitalone.png"
               alt="Logo"
               boxSize="100px"
               objectFit="contain"
@@ -69,9 +70,12 @@ export default function Navbar() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("#4F4747", "white");
-  const linkHoverColor = useColorModeValue("white", "black");
+  const linkColor = useColorModeValue("black", "black");
+  const linkHoverColor = useColorModeValue("#d02c22", "#d02c22");
   const location = useLocation();
+  const { redirectToAccountPage } = useRedirectFunctions()
+  const logoutFunction = useLogoutFunction()
+
   return (
     <Stack
       direction={"row"}
@@ -86,22 +90,23 @@ const DesktopNav = () => {
               <Box
                 as="a"
                 padding={"10px 10px"}
-                href={navItem.href ?? "#"}
+                href={navItem.href ?? undefined}
+                onClick={navItem.label === "LOGOUT" ? () => logoutFunction(true) : navItem.label === "ACCOUNT" ? () => redirectToAccountPage() : () => {}}
                 fontSize={"18px"}
-                fontFamily={"Inter"}
-                fontWeight={700}
+                fontWeight={500}
                 color={linkColor}
                 transition="color 0.4s, border-color 0.4s"
                 bg={
                   location.pathname === navItem.href
-                    ? "#A5BE9A"
+                    ? "#d02c22"
                     : "transparent"
                 }
                 rounded="full"
                 _hover={{
-                  borderBottomColor: "#60AF63",
+                  borderBottomColor: "#d02c22",
                   color: linkHoverColor,
                 }}
+                cursor="pointer"
               >
                 {navItem.label}
               </Box>
@@ -193,11 +198,12 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "/",
   },
   {
-    label: "DATA UPLOAD",
-    href: "/data-upload",
+    label: "MAKE PAYMENT"
   },
   {
-    label: "DATA ANALYSIS",
-    href: "/data-analysis",
+    label: "ACCOUNT",
   },
+  {
+    label: "LOGOUT",
+  }
 ];

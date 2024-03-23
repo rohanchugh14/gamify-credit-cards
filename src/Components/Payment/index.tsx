@@ -17,18 +17,21 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
+import { User } from '../types';
 import {useState} from 'react'
 import { Input } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 
+type Props = {
+  user: User
+}
 
-
-function Payment() {
+function Payment({user}: Props) {
   const [open, setOpen] = useState(false)
   const data =
   {
     balance: 100,
-    due_date: new Date('Mar 20'),
+    due_date: new Date('Mar 27'),
     min_payment: 35.00,
     closing_date: new Date('Mar 30'),
   }

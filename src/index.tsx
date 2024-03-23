@@ -2,17 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './Components/App';
 import reportWebVitals from './reportWebVitals';
+import { RequiredAuthProvider } from "@propelauth/react";
+
 
 import { ChakraProvider } from '@chakra-ui/react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navbar from './Components/Navbar';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <RequiredAuthProvider authUrl="https://372270922.propelauthtest.com/">
     <ChakraProvider>
-      <App />
+      <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<App />} />
+      </Routes>
+      </BrowserRouter>
     </ChakraProvider>
+    </RequiredAuthProvider>
   </React.StrictMode>
 );
 
