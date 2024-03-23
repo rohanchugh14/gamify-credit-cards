@@ -1,8 +1,12 @@
 import {useState} from 'react'
 import { Progress,Box } from '@chakra-ui/react'
 
-function CreditBar() {
-  const [creditScore, setCreditScore] = useState<number>(635)
+type Props = {
+  initCreditScore: number
+}
+
+function CreditBar({initCreditScore}: Props) {
+  const [creditScore, setCreditScore] = useState<number>(initCreditScore)
   const CREDIT_MAX = 850
   return (
     <div className="App">

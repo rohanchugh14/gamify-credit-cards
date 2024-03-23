@@ -85,9 +85,9 @@ async function generateNewCardWithTransactions(userId) {
   const card = {
       userId: userId,
       name: `${faker.commerce.productName()} Card`,
-      creditLimit: generateRandomNumber(1000, 10000),
+      creditLimit: parseFloat(String(generateRandomNumber(5000, 10000)) + "." + String(generateRandomNumber(0, 99))),
       annualFee: annualFees[generateRandomNumber(0, annualFees.length - 1)],
-      currentBalance: generateRandomNumber(0, 5000),
+      currentBalance: parseFloat(String(generateRandomNumber(0, 5000)) + "." + String(generateRandomNumber(0, 99))),
       statementBalance: generateRandomNumber(0, 5000),
       minPayment: generateRandomNumber(25, 100),
   };

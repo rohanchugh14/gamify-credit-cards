@@ -2,9 +2,14 @@ import { Button } from '@chakra-ui/react'
 import {useState} from 'react'
 import { Progress, Box } from '@chakra-ui/react'
 
-function EXPBar() {
-  const [XP, setXP] = useState<number>(0)
-  const [level, setLevel] = useState<number>(1)
+type Props = {
+  initXP: number;
+  initLevel: number;
+}
+
+function EXPBar({initXP, initLevel}: Props) {
+  const [XP, setXP] = useState<number>(initXP)
+  const [level, setLevel] = useState<number>(initLevel)
 
   // current XP
   // level

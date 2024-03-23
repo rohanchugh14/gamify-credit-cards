@@ -13,8 +13,8 @@ type Props = {
   user: User;
 };
 const Game = ({user}: Props) => {
-  const [creditLimit, setCreditLimit] = useState<number>(2200)
-  const [creditUsed, setCreditUsed] = useState<number>(1230.32)
+  const [creditLimit, setCreditLimit] = useState<number>(user.cards[0].creditLimit)
+  const [creditUsed, setCreditUsed] = useState<number>(user.cards[0].currentBalance)
   const EnemyStyle = { 
     right: (creditUsed/creditLimit)+"vw"
   }
@@ -26,10 +26,10 @@ const Game = ({user}: Props) => {
     height="30vw">
       <Flex flexDirection="column" padding="25px">
         <Flex justifyContent="space-between">
-          <EXPBar />
+          <EXPBar initXP={user.exp} initLevel={user.level} />
           <Gold />
         </Flex>
-        <CreditBar />
+        <CreditBar initCreditScore={user.creditScore}/>
       </Flex>
       <Flex flexDirection="column">
         <Flex justifyContent="center">
