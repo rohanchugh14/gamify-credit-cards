@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import {useState} from 'react'
-import { Progress } from '@chakra-ui/react'
+import { Progress, Box } from '@chakra-ui/react'
 
 function EXPBar() {
   const [XP, setXP] = useState<number>(0)
@@ -35,9 +35,11 @@ function EXPBar() {
 
   return (
     <div className="App">
-      <Button colorScheme='blue' onClick={onClickFunc}>Button</Button>
-      <div>Level: {level}</div>
-      <Progress hasStripe colorScheme='green' value={XP/2**level*100} />
+      <Box width="30vw">
+        <Button colorScheme='blue' onClick={onClickFunc}>Button</Button>
+        <div>Level: {level}</div>
+        <Progress hasStripe colorScheme='green' value={XP/2**level*100} />
+      </Box>
     </div>
   );
 }
