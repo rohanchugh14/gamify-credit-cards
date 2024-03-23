@@ -137,18 +137,16 @@ function Payment({ user, setUser }: Props) {
         </Flex>
       </Flex>
       <Flex justifyContent="center" marginTop="10px">
-        <TableContainer>
-          <Table variant='simple'>
+        <TableContainer width="90vw">
+          <Table variant='striped' colorScheme="blackAlpha">
             <Tbody>
               <Tr justifyContent="space-between">
                 <Td>Current Balance</Td>
                 <Td isNumeric>${user.cards[0].currentBalance.toFixed(2)}</Td>
               </Tr>
-            </Tbody>
-            <Tbody>
               <Tr>
                 <Td>Payment Due Date</Td>
-                <Td>{String(DueDate)}</Td>
+                <Td isNumeric>{String(DueDate)}</Td>
               </Tr>
               <Tr>
                 <Td>Minimum Payment Due</Td>
@@ -156,39 +154,42 @@ function Payment({ user, setUser }: Props) {
               </Tr>
               <Tr>
                 <Td>Closing Date Due</Td>
-                <Td>{ClosingDate}</Td>
+                <Td isNumeric>{ClosingDate}</Td>
               </Tr>
             </Tbody>
           </Table>
         </TableContainer>
       </Flex>
-      <Flex justifyContent="center" marginTop='10px'>
-        <TableContainer>
-          <Table variant='striped' colorScheme='teal'>
-            <Thead>
-              <Tr>
-                <Th>Date</Th>
-                <Th>Description</Th>
-                <Th>Category</Th>
-                <Th>Name</Th>
-                <Th>Amount</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {user.cards[0].transactions.map((transaction) => <Tr>
-                <Td>{new Date(transaction.date).toLocaleDateString(undefined, {
-                  month: 'short',
-                  day: '2-digit'
-                })}</Td>
-                <Td>{transaction.description}</Td>
-                <Td>{transaction.category}</Td>
-                <Td>{user.cards[0].name}</Td>
-                <Td isNumeric>${transaction.amount.toFixed(2)}</Td>
-              </Tr>)}
-            </Tbody>
-          </Table>
-        </TableContainer>
+      <Flex flexDirection="column" alignItems="flex-start" marginLeft="5vw" marginTop="2vw">
+        <h1 style={{fontSize: 30}}>Transaction Table</h1>
+        <Flex justifyContent="center" marginTop='10px'>
+          <TableContainer width="90vw">
+            <Table variant='striped' colorScheme='teal'>
+              <Thead>
+                <Tr>
+                  <Th>Date</Th>
+                  <Th>Description</Th>
+                  <Th>Category</Th>
+                  <Th>Name</Th>
+                  <Th>Amount</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {user.cards[0].transactions.map((transaction) => <Tr>
+                  <Td>{new Date(transaction.date).toLocaleDateString(undefined, {
+                    month: 'short',
+                    day: '2-digit'
+                  })}</Td>
+                  <Td>{transaction.description}</Td>
+                  <Td>{transaction.category}</Td>
+                  <Td>{user.cards[0].name}</Td>
+                  <Td isNumeric>${transaction.amount.toFixed(2)}</Td>
+                </Tr>)}
+              </Tbody>
+            </Table>
+          </TableContainer>
 
+        </Flex>
       </Flex>
     </Flex>
 
