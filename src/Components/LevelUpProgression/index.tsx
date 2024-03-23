@@ -11,7 +11,9 @@ import {
     ModalCloseButton,
     Button,
 } from '@chakra-ui/react'
-const knowledgeBook: any = {
+import Quest from "./Quest";
+
+const knowledgeBook: Record<number, string> = {
     1: `
     Brave Undead,
     
@@ -101,6 +103,7 @@ function Progression({user}: Props) {
             </ModalFooter>
           </ModalContent>
         </Modal>
+        <Quest user={user}/>
       </>
     )
 }
