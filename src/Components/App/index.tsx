@@ -19,6 +19,7 @@ const App = withAuthInfo((props: WithAuthInfoProps) => {
         },
       });
       const userData: User = await data.json();
+      userData.token = props.accessToken ?? "";
       setUser(userData);
     };
     fetchFunc();
@@ -30,7 +31,7 @@ const App = withAuthInfo((props: WithAuthInfoProps) => {
       {user ? (
         <>
           <Game user={user}/>
-          <Payment user={user}/>
+          <Payment user={user} setUser={setUser}/>
           <Progression user={user}/>
         </>
       ) : (

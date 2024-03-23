@@ -25,13 +25,17 @@ import { Transaction, User } from '../types';
 import { useState } from 'react'
 import { Input } from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
+import Routes from '../../Routes';
 
 type Props = {
   user: User
+  setUser: (user: User) => void
 }
 
-function Payment({ user }: Props) {
+function Payment({ user, setUser }: Props) {
   const [open, setOpen] = useState(false)
+  const [inputVal, setInputVal] = useState('0')
+  const [selectVal, setSelectVal] = useState('current')
   const data =
   {
     balance: 100,
@@ -47,6 +51,45 @@ function Payment({ user }: Props) {
     month: 'short',
     day: '2-digit'
   });
+
+  const makePayment = async() => {
+    let paymentAmount = 0
+    console.log(selectVal)
+    switch(selectVal) {
+      case 'current':
+        paymentAmount = user.cards[0].currentBalance
+        break
+      case 'min':
+        paymentAmount = user.cards[0].minPayment
+        break
+      case 'fixed':
+        paymentAmount = parseFloat(inputVal)
+        break
+    }
+    const res = await fetch(`${Routes.API}/makePayment/${user.cards[0]._id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: paymentAmount,
+      })});
+    const data: User = await res.json();
+    data.token = user.token;
+    console.log(data)
+    setOpen(false)
+    setUser(data)
+  }
+
+  const selectOnChange = (e: any) => {
+    console.log(e.target.value)
+    setSelectVal(e.target.value)
+  }
+  console.log("boolean thing", parseFloat(inputVal) > user.cards[0].currentBalance)
+  console.log("inp val", inputVal)
+  console.log("parsed inp val", parseFloat(inputVal))
+  console.log("curr bal", user.cards[0].currentBalance)
   user.cards[0].transactions.sort((a: Transaction, b: Transaction) => (new Date(a.date) > new Date(b.date)) ? -1 : 1)
   return (
     <Flex justifyContent="center" flexDirection="column" marginBottom="30px">
@@ -59,21 +102,22 @@ function Payment({ user }: Props) {
             <ModalCloseButton />
             <ModalBody>
               Pay From
-              <Select>
+              <Select marginTop="5px">
                 <option value='option1'>Bank Account 1 - 5984</option>
                 <option value='option2'>Bank Account 2 - 1438</option>
                 <option value='option3'>Bank Account 3 - 3994</option>
               </Select>
               Amount
-              <Select>
-                <option value='option1'>Current balance - ${data.balance.toFixed(2)}</option>
-                <option value='option2'>Total minimum payment due - ${data.min_payment.toFixed(2)}</option>
-                <option value='option3'>Fixed Amount</option>
+              <Select value={selectVal} onChange={selectOnChange} marginTop="5px">
+                <option value='current'>Current balance - ${user.cards[0].currentBalance.toFixed(2)}</option>
+                <option value='min' disabled={user.cards[0].minPayment > user.cards[0].currentBalance}>Total minimum payment due - ${user.cards[0].minPayment.toFixed(2)}</option>
+                <option value='fixed'>Fixed Amount</option>
               </Select>
+              {selectVal === 'fixed' ? <Input placeholder='Enter amount' value={inputVal} onChange={(e: any) => setInputVal(e.target.value)} marginTop="5px" /> : <></>}
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={() => setOpen(false)}>
+              <Button colorScheme='blue' mr={3} onClick={() => makePayment()} isDisabled={parseFloat(inputVal) > user.cards[0].currentBalance}>
                 Pay
               </Button>
               <Button variant='ghost'>Get Help!</Button>
@@ -87,7 +131,11 @@ function Payment({ user }: Props) {
             <Tbody>
               <Tr justifyContent="space-between">
                 <Td>Current Balance</Td>
-                <Td isNumeric>${data.balance.toFixed(2)}</Td>
+                <Td isNumeric>${user.cards[0].currentBalance.toFixed(2)}</Td>
+              </Tr>
+            </Tbody>
+            <Tbody>
+              <Tr>
                 <Td>Payment Due Date</Td>
                 <Td>{String(DueDate)}</Td>
               </Tr>
@@ -95,7 +143,9 @@ function Payment({ user }: Props) {
             <Tbody> */}
               <Tr>
                 <Td>Minimum Payment Due</Td>
-                <Td isNumeric>${data.min_payment.toFixed(2)}</Td>
+                <Td isNumeric>${user.cards[0].minPayment.toFixed(2)}</Td>
+              </Tr>
+              <Tr>
                 <Td>Closing Date Due</Td>
                 <Td>{ClosingDate}</Td>
               </Tr>

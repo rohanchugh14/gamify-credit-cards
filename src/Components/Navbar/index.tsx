@@ -194,10 +194,6 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "HOME",
-    href: "/",
-  },
-  {
     label: "MAKE PAYMENT"
   },
   {

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { faker } = require('@faker-js/faker');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const { initAuth } = require('@propelauth/express');
 const app = express();
 const cors = require('cors');
@@ -140,6 +140,7 @@ async function main() {
     app.get('/profile', requireUser, async (req, res) => {
     try {
       const userId = req.user.userId;
+      console.log(userId)
       let user = await usersCollection.findOne({ _id: userId });
       if (!user) {
         // if user isn't found, create a new user object with the userId
@@ -181,6 +182,52 @@ async function main() {
       } catch (err) {
         console.error(err);
         res.status(500).send('Failed to get cards.');
+      }
+    });
+
+    // make a payment on a card
+    app.post('/makePayment/:cardId', requireUser, async (req, res) => {
+      try {
+        const cardId = new ObjectId(req.params.cardId);
+        const paymentAmount = parseFloat(req.body.amount);
+        console.log("payment amt", paymentAmount)
+        const card = await cardsCollection.findOne({ _id: cardId });
+        if (!card) {
+          res.status(404).send('Card not found.');
+          return;
+        }
+        const newBalance = card.currentBalance - paymentAmount;
+        await cardsCollection.updateOne({ _id: cardId }, { $set: { currentBalance: newBalance } });
+        // calculate new xp and level based on payment amount
+
+        // get user's current xp and level
+        const user = await usersCollection.findOne({ _id: req.user.userId });
+        let exp = user.exp + Math.floor(paymentAmount / 10);
+        console.log("exp", exp)
+        let level = user.level;
+        let gold = Math.floor(user.gold + paymentAmount / 2);
+        console.log(gold)
+        while(exp >= Math.ceil(level ** 2 / 5)) {
+          console.log("in here now", exp, level, Math.ceil(level ** 2 / 5))
+          exp -= Math.ceil(level ** 2 / 5);
+          level++;
+        }
+        console.log("level", level, "exp", exp, "gold", gold)
+
+        await usersCollection.updateOne({ _id: req.user.userId }, { $set: { exp: exp, level: level, gold: gold } });
+        
+        // return the updated user data and card data
+        const updatedUser = await usersCollection.findOne({ _id: req.user.userId });
+        const cards = await cardsCollection.find({ userId: req.user.userId }).toArray();
+        for (const card of cards) {
+          card.transactions = await transactionsCollection.find({ cardId: card._id }).toArray();
+        }
+        updatedUser.cards = cards;
+        console.log(user)
+        res.json(updatedUser);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Failed to make payment.');
       }
     });
   } catch (e) {

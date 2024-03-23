@@ -15,6 +15,7 @@ export type CreditCard = {
   annualFee: number;
   currentBalance: number;
   transactions: Transaction[];
+  minPayment: number;
   name: string;
 }
 export type User = {
@@ -24,5 +25,6 @@ export type User = {
   exp: number;
   level: number;
   gold: number;
+  token: string;
   cards: CreditCard[];
 }

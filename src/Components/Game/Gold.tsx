@@ -1,9 +1,10 @@
 import { Flex, Box } from '@chakra-ui/react';
 import {useState} from 'react'
 
-
-function Gold() {
-  const [gold, setGold] = useState<number>(0)
+type Props = {
+  gold: number
+}
+function Gold({gold}: Props) {
   return (
     <Flex justifyContent="flex-end">
       <div className="App">
