@@ -61,15 +61,11 @@ function Progression({ user }: Props) {
   const [nuggetIter, setNuggetIter] = useState(0)
   const [open, setOpen] = useState(false)
   const onClickPrevHandler = (e: any) => {
-    if (nuggetIter > 1) {
-      setNuggetIter(nuggetIter -1)
-    }
+      setNuggetIter(nuggetIter - 1)
   }
   const onClickNextHandler = (e: any) => {
-    if (nuggetIter < 7) {
       console.log(nuggetIter)
       setNuggetIter(nuggetIter +1)
-    }
   }
   return (
     <>
