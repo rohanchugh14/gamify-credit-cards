@@ -6,7 +6,6 @@ import AvailableCredit from "./AvailableCredit";
 import { Flex } from '@chakra-ui/react';
 import Protagonist from "./Protagonist";
 import Enemy from "./Enemy";
-import {useState} from 'react'
 import { User } from "../types";
 
 type Props = {
@@ -15,9 +14,6 @@ type Props = {
 const Game = ({user}: Props) => {
   const creditLimit = user.cards[0].creditLimit
   const creditUsed = user.cards[0].currentBalance
-  const EnemyStyle = { 
-    right: (creditUsed/creditLimit)+"vw"
-  }
   return (
     <Flex flexDirection="column" 
     justifyContent="space-between" 

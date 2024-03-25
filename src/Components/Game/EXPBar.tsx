@@ -1,5 +1,3 @@
-import { Button } from '@chakra-ui/react'
-import {useState} from 'react'
 import { Progress, Box } from '@chakra-ui/react'
 
 type Props = {

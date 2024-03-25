@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import { Progress } from '@chakra-ui/react'
 import { Box,Flex } from '@chakra-ui/react'
 type Props = {

@@ -1,4 +1,4 @@
-import { Flex, Box } from '@chakra-ui/react';
+import { Flex} from '@chakra-ui/react';
 import {useState} from 'react'
 import { User } from "../types";
 import React from "react";
@@ -11,7 +11,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Button,
-  Input
 } from '@chakra-ui/react'
 
 const questBook: Record<number, string> = {

@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 //@ts-ignore
 import audioTest from './background_music.mp3'
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const audio = new Audio(audioTest);
-  audio.loop = true; // Set the audio to loop
+  // const audio = new Audio(audioTest);
+  const [audio, setAudio] = useState<any>(null)
+  
 
   useEffect(() => {
+    if (audio === null) {
+      setAudio(new Audio(audioTest))
+      return
+    }
+    audio.loop = true; // Set the audio to loop
     const playAudio = () => {
       audio.play();
       setIsPlaying(true);
@@ -29,7 +35,7 @@ const AudioPlayer = () => {
       audio.pause();
       setIsPlaying(false);
     };
-  }, []); // Empty dependency array to run effect only once after initial render
+  }, [audio]); // Empty dependency array to run effect only once after initial render
 
   return (
     <div>

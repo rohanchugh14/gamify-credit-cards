@@ -5,11 +5,8 @@ import {
   Td,
   Th,
   TableContainer,
-  TableCaption,
-  Tfoot,
   Thead,
   Flex,
-  Box,
   Button
 } from '@chakra-ui/react'
 import {

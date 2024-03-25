@@ -1,5 +1,4 @@
 import { Flex, Box } from '@chakra-ui/react';
-import {useState} from 'react'
 
 type Props = {
   gold: number

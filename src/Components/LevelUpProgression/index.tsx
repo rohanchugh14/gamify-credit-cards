@@ -11,11 +11,9 @@ import {
   ModalCloseButton,
   Button,
 } from '@chakra-ui/react'
-import Quest from "./Quest";
 import TextToSpeech from "../TextToSpeech";
 
-const knowledgeBook: Record<number, string> = {
-  1: `
+const knowledgeBook = [`
     Brave Undead,
     
     Embark on a perilous journey to fortify your financial standing, wielding your credit card as a weapon against the looming darkness. But heed this warning: as you amass credit, be vigilant! Just as a dreaded skeleton lurks in the shadows, failure to honor your debts may unleash havoc upon the peaceful town.
@@ -27,40 +25,40 @@ const knowledgeBook: Record<number, string> = {
     Signed,
     The Keeper of Financial Wisdom`,
 
-  2: `Brave Warrior,
+  `Brave Warrior,
 
     A second decree now commands your attention: pay fines swiftly. In doing so, you shall gain crucial experience, unlocking a wealth of wisdom and prosperity. Expect rewards in coins, a soaring credit score, and access to superior credit cards. Forge ahead with courage, for your financial journey holds boundless opportunities.
     
     Signed,
     The Keeper of Prosperity`,
 
-  3: `Noble Adventurer,
+  `Noble Adventurer,
 
     Prepare thyself for the next mandate: prepay ere the statement's dawn. By reducing thy utilization ere it is tallied, thou shalt wield financial prowess unmatched. Embrace this tactic, for it shall bolster thy credit score and grant thee favor with lenders. As thou treadest this path, remember: foresight be thy greatest ally in the battle for fiscal dominion.
     
     Signed,
     The Custodian of Fiscal Fortitude`,
 
-  4: `Mighty Conqueror,
+  `Mighty Conqueror,
 
     On the eve of statement's arrival, heed this dire warning: The contract demands settlement at earliest convenience, lest dire consequences befall thee. Fail not in thy duty, for neglect shall usher a plummet in credit. Let swiftness be thy ally, and debts be met without delay. Thus, safeguard thy financial stronghold from the shadows that lurk.
     
     Signed,
     The Sentinel of Credit Vigilance`,
 
-  5: `Majestic Conqueror,
+  `Majestic Conqueror,
 
     Behold the treasure trove that awaits thee through mastery of thy credit score! As thou diligently tendest to its growth, envision the bountiful rewards that shall grace thy path. A high credit score unlocks gates to untold riches: favorable loan terms, coveted credit cards, and entry to realms of opulence. With each prudent step, thou art closer to securing financial sovereignty and reaping the fruits of thy labor.
     
     Signed,
     The Herald of Financial Ascendancy`
+]
 
-}
 type Props = {
   user: User;
 };
 function Progression({ user }: Props) {
-  const [nuggetIter, setNuggetIter] = useState(1)
+  const [nuggetIter, setNuggetIter] = useState(0)
   const [open, setOpen] = useState(false)
   const onClickPrevHandler = (e: any) => {
     if (nuggetIter > 1) {
@@ -86,7 +84,7 @@ function Progression({ user }: Props) {
           </ModalBody>
 
           <ModalFooter flexDirection="column" alignContent="center" justifyContent="center">
-            <TextToSpeech runOnClickPrev={onClickPrevHandler} runOnClickNext={onClickNextHandler} />
+            <TextToSpeech iter={nuggetIter} runOnClickPrev={onClickPrevHandler} runOnClickNext={onClickNextHandler} />
             <Button colorScheme='teal' width="10vw" size='lg' onClick={() => setOpen(false)}>
               Close
             </Button>
