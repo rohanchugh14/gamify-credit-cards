@@ -8,14 +8,14 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 const port = process.env.PORT || 3000;
-
+const API_KEY = process.env.PROPEL_AUTH_API_KEY
 const {
   requireUser,
   fetchUserMetadataByUserId,
   // ...
 } = initAuth({
   authUrl: "https://auth.rohanchugh.com",
-  apiKey: "916856fd6672049d51eb058d122a63d64ffad86962d15e55a311ce421d3af05919b3761f69d76c5251c4578991edcf20", 
+  apiKey: API_KEY, 
 });
 
 
