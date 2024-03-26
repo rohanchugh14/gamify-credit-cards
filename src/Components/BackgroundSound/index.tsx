@@ -26,6 +26,7 @@ const BackgroundSound: React.FC<SoundTogglerProps> = ({ soundFile, soundOnImage,
         src={isPlaying ? soundOnImage : soundOffImage}
         style={{ width: '50px', height: '50px', cursor: 'pointer' }}
         onClick={toggleSound}
+        alt="sound"
       />
     </div>
   );
