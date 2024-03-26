@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { RequiredAuthProvider } from "@propelauth/react";
+import { RedirectToLogin, RequiredAuthProvider } from "@propelauth/react";
 import AuthWrapper from './Components/AuthWrapper';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RequiredAuthProvider authUrl="https://372270922.propelauthtest.com/">
+    <RequiredAuthProvider authUrl="https://auth.rohanchugh.com" displayIfLoggedOut={<RedirectToLogin postLoginRedirectUrl={"https://readyplayercredit.netlify.app"}/>}>
       <AuthWrapper />
     </RequiredAuthProvider>
   </React.StrictMode>
