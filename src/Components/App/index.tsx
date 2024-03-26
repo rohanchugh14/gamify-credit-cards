@@ -2,7 +2,7 @@ import Payment from "../Payment";
 import "./App.css";
 import Game from "../Game";
 import { User } from "../types";
-import BackgroundSound from "../BackgroundSound";
+import { Flex } from "@chakra-ui/layout";
 
 type Props = {
   user: User;
@@ -16,9 +16,8 @@ const App = ({user, setUser}: Props) => {
     <>
           <Game user={user}/>
           <Payment user={user} setUser={setUser}/>
-          {/* <Progression user={user}/> */}
-          {/* <TextToSpeech/> */}
-          <BackgroundSound/>
+          <Flex flexDirection="column" padding="25px">
+          </Flex>
         </>
       )
 };

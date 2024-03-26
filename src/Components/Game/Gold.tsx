@@ -5,7 +5,7 @@ type Props = {
 }
 function Gold({gold}: Props) {
   return (
-    <Flex justifyContent="flex-end">
+    <Flex>
       <div className="App">
         <Box color="white">Gold: {gold}</Box>
       </div>

@@ -7,6 +7,7 @@ import { Flex } from '@chakra-ui/react';
 import Protagonist from "./Protagonist";
 import Enemy from "./Enemy";
 import { User } from "../types";
+import BackgroundSound from "../BackgroundSound";
 
 type Props = {
   user: User;
@@ -23,9 +24,16 @@ const Game = ({user}: Props) => {
       <Flex flexDirection="column" padding="25px">
         <Flex justifyContent="space-between">
           <EXPBar exp={user.exp} level={user.level} />
-          <Gold gold={user.gold}/>
+          <BackgroundSound
+            soundFile="Assets/background_music.mp3" // Replace with the path to your audio file
+            soundOnImage="Assets/MusicOn.png" // Replace with the path to your sound on image
+            soundOffImage="Assets/MusicOff.png" // Replace with the path to your sound off image
+          />
         </Flex>
         <CreditBar creditScore={user.creditScore}/>
+        <Flex marginTop= '15px' >
+        <Gold gold={user.gold}/>
+        </Flex>
       </Flex>
       <Flex flexDirection="column">
         <Flex justifyContent="center">
