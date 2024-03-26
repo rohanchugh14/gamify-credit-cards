@@ -22,7 +22,7 @@ const AuthWrapper = withAuthInfo((props: WithAuthInfoProps) => {
       setUser(userData);
     };
     fetchFunc();
-  }, []);
+  }, [props.accessToken]);
 
   return (
     <>

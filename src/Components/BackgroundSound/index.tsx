@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 //@ts-ignore
 import audioTest from './background_music.mp3'
+import { Button } from '@chakra-ui/react';
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -37,12 +38,23 @@ const AudioPlayer = () => {
     };
   }, [audio]); // Empty dependency array to run effect only once after initial render
 
+  const togglePlay = async() => {
+    if (isPlaying) {
+      console.log("pausing")
+      audio.pause();
+    } else {
+      console.log("playing")
+      await audio.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div>
       {/* Optional: Display playback controls */}
-      <button onClick={() => setIsPlaying(!isPlaying)}>
-        
-      </button>
+      <Button colorScheme='red' size='lg' onClick={togglePlay}>
+        {isPlaying ? 'Pause' : 'Play'}
+      </Button>
     </div>
   );
 };
