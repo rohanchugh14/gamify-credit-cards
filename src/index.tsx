@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RequiredAuthProvider authUrl="https://auth.rohanchugh.com" displayIfLoggedOut={<RedirectToLogin postLoginRedirectUrl={"https://readyplayercredit.netlify.app"}/>}>
+    <RequiredAuthProvider authUrl="https://372270922.propelauthtest.com" displayIfLoggedOut={<RedirectToLogin postLoginRedirectUrl={"https://readyplayercredit.netlify.app"}/>}>
       <AuthWrapper />
     </RequiredAuthProvider>
   </React.StrictMode>

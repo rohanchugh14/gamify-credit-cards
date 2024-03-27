@@ -14,7 +14,7 @@ const {
   fetchUserMetadataByUserId,
   // ...
 } = initAuth({
-  authUrl: "https://auth.rohanchugh.com",
+  authUrl: "https://372270922.propelauthtest.com",
   apiKey: API_KEY, 
 });
 
